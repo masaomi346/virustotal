@@ -18,7 +18,7 @@ def scan():
     for f in os.listdir(path):
         if os.path.isfile(os.path.join(path,f)) : files.append(f)
     if len(files) == 0 : return "No Malware"
-    output = "{}\n\n".format(len(files))
+    output = "Numbers:{}\n\n".format(len(files))
     for hash in files:
         url = "https://www.virustotal.com/vtapi/v2/file/report"
         params = {"resource": hash, "apikey": "APIKEY"}
