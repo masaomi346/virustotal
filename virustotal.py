@@ -29,7 +29,7 @@ def scan():
         if len(res) != 0 and res[-1].get("response_code") == 1 :
             cmd = "file " + path + "{}".format(hash)
             result = str(subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE).communicate()[0])
-            output += "Type:{0}\nHash(SHA256):{1}\nTotal:{2}\nDetect:{3}\nURL:{4}\n\n".format(result.replace("/opt/dionaea/var/lib/dionaea/binaries/{}".format(hash),""),res[-1].get("sha256"),res[-1].get("total"),res[-1].get("positives"),res[-1].get("permalink"))
+            output += "Type:{0}\nHash:{1}\nTotal:{2}\nDetect:{3}\nURL:{4}\n\n".format(result.replace("/opt/dionaea/var/lib/dionaea/binaries/{}".format(hash),""),hash,res[-1].get("total"),res[-1].get("positives"),res[-1].get("permalink"))
     return output
 
 def send(result):
