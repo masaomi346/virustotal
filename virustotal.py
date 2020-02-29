@@ -30,10 +30,9 @@ def scan():
         req = urllib.request.Request(url,data.encode("ascii"))
         res = urllib.request.urlopen(req).read().decode("utf-8")
         res = [json.loads(res) for s in res if s != ""]
-        if len(res) != 0 and res[-1].get("response_code") == 1 :
-            cmd = "file " + path + "{}".format(hash)
-            result = str(subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE).communicate()[0])
-            analysis.append("Type:{0}\nHash:{1}\nTotal:{2}\nDetect:{3}\nURL:{4}\n\n".format(result.replace("/opt/dionaea/var/lib/dionaea/binaries/{}".format(hash),""),hash,res[-1].get("total"),res[-1].get("positives"),res[-1].get("permalink")))
+        cmd = "file " + path + "{}".format(hash)
+        result = str(subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE).communicate()[0])
+        analysis.append("Type:{0}\nHash:{1}\nTotal:{2}\nDetect:{3}\nURL:{4}\n\n".format(result.replace("/opt/dionaea/var/lib/dionaea/binaries/{}".format(hash),""),hash,res[-1].get("total"),res[-1].get("positives"),res[-1].get("permalink")))
     return send(analysis)
 
 def send(analysis):
