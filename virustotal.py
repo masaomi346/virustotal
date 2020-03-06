@@ -44,4 +44,4 @@ def send(analysis):
 schedule.every().day.at("20:00").do(scan)
 while(True):
     schedule.run_pending()
-    time.sleep(60)
+    time.sleep(1)
