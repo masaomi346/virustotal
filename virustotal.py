@@ -16,23 +16,26 @@ import schedule
 def scan():
     files = []
     analysis = []
-    path = "/opt/dionaea/var/lib/dionaea/binaries/"
-    for f in os.listdir(path):
-        if os.path.isfile(os.path.join(path,f)) : files.append(f)
-    if len(files) == 0 :
-        analysis.append("No Malware")
-        return analysis
-    analysis.append("Numbers:{}\n\n".format(len(files)))
-    for hash in files:
-        url = "https://www.virustotal.com/vtapi/v2/file/report"
-        params = {"resource": hash, "apikey": "APIKEY"}
-        data = urllib.parse.urlencode(params)
-        req = urllib.request.Request(url,data.encode("ascii"))
-        res = urllib.request.urlopen(req).read().decode("utf-8")
-        res = [json.loads(res) for s in res if s != ""]
-        cmd = "file " + path + "{}".format(hash)
-        result = str(subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE).communicate()[0])
-        analysis.append("Type:{0}\nHash:{1}\nTotal:{2}\nDetect:{3}\nURL:{4}\n\n".format(result.replace("/opt/dionaea/var/lib/dionaea/binaries/{}".format(hash),""),hash,res[-1].get("total"),res[-1].get("positives"),res[-1].get("permalink")))
+    try:
+        path = "/opt/dionaea/var/lib/dionaea/binaries/"
+        for f in os.listdir(path):
+            if os.path.isfile(os.path.join(path,f)) : files.append(f)
+        if len(files) == 0 :
+            analysis.append("No Malware")
+            return analysis
+        analysis.append("Numbers:{}\n\n".format(len(files)))
+        for hash in files:
+            url = "https://www.virustotal.com/vtapi/v2/file/report"
+            params = {"resource": hash, "apikey": "APIKEY"}
+            data = urllib.parse.urlencode(params)
+            req = urllib.request.Request(url,data.encode("ascii"))
+            res = urllib.request.urlopen(req).read().decode("utf-8")
+            res = [json.loads(res) for s in res if s != ""]
+            cmd = "file " + path + "{}".format(hash)
+            result = str(subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE).communicate()[0])
+            analysis.append("Type:{0}\nHash:{1}\nTotal:{2}\nDetect:{3}\nURL:{4}\n\n".format(result.replace("/opt/dionaea/var/lib/dionaea/binaries/{}".format(hash),""),hash,res[-1].get("total"),res[-1].get("positives"),res[-1].get("permalink")))
+    except Exception as e:
+        analysis.append(e)
     return send(analysis)
 
 def send(analysis):
