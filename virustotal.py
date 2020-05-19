@@ -11,7 +11,6 @@ import os
 import time
 import subprocess
 import shlex
-import schedule
 
 def scan():
     files = []
@@ -44,7 +43,5 @@ def send(analysis):
         cmd = cmd.format(json.dumps('{\"text\":\"' + analysis[i] + '\"}'))
         subprocess.call(shlex.split(cmd))
 
-schedule.every().day.at("20:00").do(scan)
-while(True):
-    schedule.run_pending()
-    time.sleep(1)
+result = scan()
+send(result)
