@@ -1,1 +1,1 @@
-# 表面解析スクリプト
+# Malware Surface Analysis Script
