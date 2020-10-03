@@ -46,4 +46,4 @@ def send(result):
 
 result = []
 analyze()
-send(getdata)
+send(result)
