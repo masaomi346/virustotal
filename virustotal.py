@@ -8,7 +8,6 @@ import urllib.parse
 import urllib.request
 import urllib.response
 import os
-import time
 import subprocess
 import shlex
 
