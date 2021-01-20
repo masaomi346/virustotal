@@ -32,7 +32,6 @@ def analyze():
                 result.append("Type:{0}\nHash:{1}\nMalicious:{2}\nSuspicious:{3}\nUndetected:{4}\nURL: https://www.virustotal.com/gui/file/{5}\n\n".format(cmd.replace(path + "{}".format(hash),""),hash,res["data"]["attributes"]["last_analysis_stats"].get("malicious"),res["data"]["attributes"]["last_analysis_stats"].get("suspicious"),res["data"]["attributes"]["last_analysis_stats"].get("undetected"),res["data"].get("id")))
         except:
             result.append("Message:{}".format(sys.exc_info()))
-            pass
 
 def send(result):
     for data in result:
