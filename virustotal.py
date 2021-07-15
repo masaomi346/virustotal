@@ -31,7 +31,7 @@ def analyze():
                 res = json.loads(res.read().decode("utf-8"))
                 result.append("Type:{0}\nHash:{1}\nMalicious:{2}\nSuspicious:{3}\nUndetected:{4}\nURL: https://www.virustotal.com/gui/file/{5}\n\n".format(cmd.replace(path + "{}".format(hash),""),hash,res["data"]["attributes"]["last_analysis_stats"].get("malicious"),res["data"]["attributes"]["last_analysis_stats"].get("suspicious"),res["data"]["attributes"]["last_analysis_stats"].get("undetected"),res["data"].get("id")))
         except:
-            result.append("Message:{}".format(sys.exc_info()))
+            result.append("Maybe it's not uploaded.\nMessage:{}".format(sys.exc_info()))
 
 def send(result):
     for data in result:
